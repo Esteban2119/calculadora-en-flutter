@@ -20,10 +20,10 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
-  String output = "0"; // Muestra el número actual
-  String input = ""; // Muestra el historial de entrada
-  List<String> inputHistory = []; // Lista para almacenar los números y operadores
-  bool isNewInput = true; // Indica si estamos en un nuevo número después de una operación
+  String output = "0"; 
+  String input = ""; 
+  List<String> inputHistory = []; 
+  bool isNewInput = true; 
 
   // Función que maneja la lógica de las operaciones
   buttonPressed(String buttonText) {
@@ -35,39 +35,35 @@ class _CalculatorState extends State<Calculator> {
         inputHistory.clear();
         isNewInput = true;
       } else if (buttonText == "+" || buttonText == "-" || buttonText == "÷" || buttonText == "×") {
-        // Si presionas un operador
         if (!isNewInput) {
-          inputHistory.add(output);  // Agregar el número actual a la lista
-          inputHistory.add(buttonText);  // Agregar el operador a la lista
-          input += " $output $buttonText";  // Agregar al historial visual
+          inputHistory.add(output);  
+          inputHistory.add(buttonText);  
+          input += " $output $buttonText";  
         }
         isNewInput = true;
       } else if (buttonText == ".") {
-        // Si el punto ya está en la cadena, no lo agregamos
         if (!output.contains(".")) {
           output += buttonText;
           isNewInput = false;
         }
       } else if (buttonText == "=") {
-        // Realizamos el cálculo con todos los números y operadores almacenados
-        inputHistory.add(output); // Agregar el último número antes de calcular
+        inputHistory.add(output); 
         calculate();
-        input += " $output ="; // Agregar el resultado al historial de entrada
+        input += " $output ="; 
       } else {
-        // Si presionas un número
+        
         if (isNewInput) {
-          output = buttonText;  // Si es el primer número o después de un operador, reinicia el valor
+          output = buttonText; 
           isNewInput = false;
         } else {
-          output += buttonText; // Concatenamos el número al actual
+          output += buttonText; 
         }
       }
     });
   }
 
-  // Función para realizar el cálculo con todos los números y operadores
   void calculate() {
-    double result = double.tryParse(inputHistory[0]) ?? 0.0; // Primer número
+    double result = double.tryParse(inputHistory[0]) ?? 0.0; 
 
     for (int i = 1; i < inputHistory.length; i += 2) {
       String operator = inputHistory[i];
@@ -83,14 +79,14 @@ class _CalculatorState extends State<Calculator> {
         if (num != 0) {
           result /= num;
         } else {
-          result = double.nan;  // Manejo de error para división por cero
+          result = double.nan; 
         }
       }
     }
 
-    output = result.toString();  // Muestra el resultado final
+    output = result.toString();  
     if (output.endsWith(".0")) {
-      output = output.substring(0, output.length - 2);  // Eliminar decimales innecesarios
+      output = output.substring(0, output.length - 2);  
     }
   }
 
@@ -139,7 +135,7 @@ class _CalculatorState extends State<Calculator> {
             child: Text(
               output,
               style: TextStyle(
-                fontSize: output.length > 10 ? 32 : 48,  // Ajusta el tamaño según la longitud del texto
+                fontSize: output.length > 10 ? 32 : 48, 
                 color: Colors.white,
               ),
               maxLines: 1,
